@@ -144,8 +144,8 @@ def calculate_state_prediction_loss(model, tbatch_interactionids, user_embedding
 def save_model(model, optimizer, args, epoch, user_embeddings, item_embeddings, train_end_idx, user_embeddings_time_series=None, item_embeddings_time_series=None, path=PATH):
     print("*** Saving embeddings and model ***")
     state = {
-            'user_embeddings': user_embeddings.data.cpu().numpy(),
-            'item_embeddings': item_embeddings.data.cpu().numpy(),
+            'user_embeddings': user_embeddings,
+            'item_embeddings': item_embeddings,
             'epoch': epoch,
             'state_dict': model.state_dict(),
             'optimizer' : optimizer.state_dict(),
@@ -153,8 +153,8 @@ def save_model(model, optimizer, args, epoch, user_embeddings, item_embeddings, 
             }
 
     if user_embeddings_time_series is not None:
-        state['user_embeddings_time_series'] = user_embeddings_time_series.data.cpu().numpy()
-        state['item_embeddings_time_series'] = item_embeddings_time_series.data.cpu().numpy()
+        state['user_embeddings_time_series'] = user_embeddings_time_series
+        state['item_embeddings_time_series'] = item_embeddings_time_series
 
     directory = os.path.join(path, 'saved_models/%s' % args.network)
     if not os.path.exists(directory):
